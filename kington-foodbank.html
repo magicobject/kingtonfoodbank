@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kington Foodbank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5EEE0;
+    --bg-alt: #EBDFC7;
+    --card: #FBF7EE;
+    --ink: #2A2318;
+    --ink-soft: #55493A;
+    --brick: #A8452F;
+    --brick-dark: #7E3220;
+    --green: #3E4C34;
+    --gold: #C99A2E;
+    --line: rgba(42,35,24,0.14);
+    --radius: 6px;
+    --max: 960px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', serif;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  a { color: var(--brick-dark); }
+  a:focus-visible, button:focus-visible, .btn:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- Nav ---------- */
+  header.site {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(245,238,224,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+  .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--brick-dark);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  nav.links {
+    display: flex;
+    gap: 28px;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  nav.links a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 3px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  nav.links a:hover { border-color: var(--brick); color: var(--brick-dark); }
+
+  @media (max-width: 620px) {
+    nav.links { gap: 16px; font-size: 0.85rem; }
+    .nav-row { padding: 14px 20px; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 72px 0 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 18% 22%, rgba(168,69,47,0.08), transparent 45%),
+                       radial-gradient(circle at 85% 10%, rgba(62,76,52,0.08), transparent 40%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--green);
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--green);
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6vw, 4.1rem);
+    font-weight: 700;
+    line-height: 1.02;
+    max-width: 11ch;
+  }
+  .hero .lede {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+
+  .hero-body {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+  }
+  @media (max-width: 800px) {
+    .hero-body { grid-template-columns: 1fr; }
+  }
+
+  .cta-row {
+    margin-top: 34px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.98rem;
+    padding: 14px 26px;
+    border-radius: var(--radius);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary {
+    background: var(--brick);
+    color: #FBF7EE;
+    box-shadow: 0 3px 0 var(--brick-dark);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--brick-dark); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--green);
+    border: 2px solid var(--green);
+  }
+  .btn-secondary:hover { background: var(--green); color: var(--bg); }
+
+  /* ---------- Notice card (signature element) ---------- */
+  .notice {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 30px 26px 26px;
+    transform: rotate(-1.4deg);
+    box-shadow: 0 18px 34px -18px rgba(42,35,24,0.35), 0 2px 0 rgba(42,35,24,0.06);
+    position: relative;
+  }
+  .notice::before, .notice::after {
+    content: "";
+    position: absolute;
+    width: 46px;
+    height: 16px;
+    background: rgba(201,154,46,0.55);
+    top: -9px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.12);
+  }
+  .notice::before { left: 22px; transform: rotate(-6deg); }
+  .notice::after { right: 22px; transform: rotate(5deg); }
+  .notice .tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .notice .day {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.6rem, 8vw, 3.4rem);
+    color: var(--brick-dark);
+    line-height: 1;
+    margin-top: 6px;
+    position: relative;
+    display: inline-block;
+  }
+  .notice .day svg {
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 100%;
+    height: 14px;
+  }
+  .notice .time {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.9rem;
+    color: var(--ink);
+    margin-top: 14px;
+  }
+  .notice .place {
+    margin-top: 16px;
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    border-top: 1px dashed var(--line);
+    padding-top: 14px;
+  }
+  .notice .place strong { color: var(--ink); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 84px 0; }
+  section.alt { background: var(--bg-alt); }
+  .section-head {
+    max-width: 58ch;
+    margin-bottom: 44px;
+  }
+  .kicker {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: var(--brick-dark);
+    margin-bottom: 10px;
+  }
+  .section-head h2 {
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  .section-head p {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    font-size: 1.08rem;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Help grid */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 760px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+  }
+  .info-card .icon { margin-bottom: 14px; }
+  .info-card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .info-card p { color: var(--ink-soft); font-size: 0.98rem; margin: 0; }
+
+  /* Donate list */
+  .donate-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 760px) { .donate-layout { grid-template-columns: 1fr; } }
+
+  .item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+  }
+  @media (max-width: 480px) { .item-list { grid-template-columns: 1fr; } }
+  .item-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 1rem;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .item-list li::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex: none;
+    transform: translateY(-2px);
+  }
+
+  .drop-card {
+    background: var(--green);
+    color: #F2ECDD;
+    border-radius: var(--radius);
+    padding: 30px 28px;
+  }
+  .drop-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #F2ECDD;
+    margin-bottom: 12px;
+  }
+  .drop-card p { color: #DCE0D4; margin: 0 0 10px; }
+  .drop-card a { color: #F2D98A; font-weight: 600; }
+
+  /* Volunteer / give money band */
+  .split-band {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 760px) { .split-band { grid-template-columns: 1fr; } }
+  .band-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px 28px;
+  }
+  .band-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
+  .band-card p { color: var(--ink-soft); }
+
+  /* Contact / footer */
+  footer.site {
+    background: var(--ink);
+    color: #E9E1D0;
+    padding: 56px 0 32px;
+  }
+  footer.site .foot-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(233,225,208,0.16);
+  }
+  @media (max-width: 700px) { footer.site .foot-grid { grid-template-columns: 1fr; } }
+  footer.site h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: #F2ECDD;
+  }
+  footer.site p, footer.site a { color: #C9BFA8; font-size: 0.96rem; }
+  footer.site a { text-decoration: none; }
+  footer.site a:hover { color: #F2D98A; }
+  footer.site .fine {
+    padding-top: 22px;
+    font-size: 0.82rem;
+    color: #8F856E;
+  }
+
+  .badge-strip {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .badge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 5px 11px;
+    border: 1px solid rgba(233,225,208,0.28);
+    border-radius: 100px;
+    color: #C9BFA8;
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav-row">
+    <a class="brand" href="#top">Kington Foodbank</a>
+    <nav class="links">
+      <a href="#help">Get help</a>
+      <a href="#donate">Donate</a>
+      <a href="#volunteer">Volunteer</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-grain"></div>
+    <div class="wrap hero-body">
+      <div>
+        <div class="eyebrow">Churches Together in Kington</div>
+        <h1>No one in Kington should go without food.</h1>
+        <p class="lede">Kington Foodbank offers a friendly welcome and a bag of essentials to anyone in the town and surrounding villages who needs a hand. Come along on a Friday — no fuss, no questions you don't want to answer.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#help">I need food</a>
+          <a class="btn btn-secondary" href="#donate">I'd like to help</a>
+        </div>
+      </div>
+
+      <div class="notice" aria-label="Opening hours">
+        <div class="tag">Open every week</div>
+        <div class="day">
+          Fridays
+          <svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M2 8 C 40 2, 80 12, 120 6 S 180 2, 198 8" fill="none" stroke="#C99A2E" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="time">12:15 &ndash; 13:45</div>
+        <div class="place">
+          <strong>Parish Hall</strong>, Church Street, Kington, Herefordshire
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="help" class="alt reveal">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Getting help</div>
+        <h2>If things are tight this week, you're welcome here.</h2>
+        <p>Just come along to the Parish Hall on Church Street during opening hours. A volunteer will meet you, and you can take away a bag of food to see you through.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#A8452F" stroke-width="1.6"><path d="M4 10.5 12 4l8 6.5"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-6h4v6"/></svg>
+          </div>
+          <h3>Where</h3>
+          <p>Parish Hall, Church Street, Kington, HR5 &mdash; in the centre of town.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#A8452F" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          </div>
+          <h3>When</h3>
+          <p>Every Friday, 12:15pm &ndash; 1:45pm. No appointment needed &mdash; just drop in.</p>
+        </div>
+        <div class="info-card">
+          <div class="icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#A8452F" stroke-width="1.6"><path d="M4 4h16v12H8l-4 4z"/></svg>
+          </div>
+          <h3>Not sure if it's for you?</h3>
+          <p>Ring or email us beforehand if you'd like to ask a question first &mdash; details below.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="donate" class="reveal">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Donating food</div>
+        <h2>What the shelves are short of</h2>
+        <p>Tinned and dried goods keep well and go furthest. A few items from the list below make a real difference to a family's week.</p>
+      </div>
+
+      <div class="donate-layout">
+        <ul class="item-list">
+          <li>Tinned meat &amp; fish</li>
+          <li>Tinned vegetables</li>
+          <li>Tinned fruit</li>
+          <li>Tinned soup</li>
+          <li>Pasta &amp; rice</li>
+          <li>Pasta sauce</li>
+          <li>Breakfast cereal</li>
+          <li>UHT / long-life milk</li>
+          <li>Tea &amp; coffee</li>
+          <li>Sugar</li>
+          <li>Biscuits</li>
+          <li>Toiletries &amp; soap</li>
+        </ul>
+
+        <div class="drop-card">
+          <h3>Where to drop off</h3>
+          <p>Bring donations to the Parish Hall, Church Street, on a Friday between 12:15 and 1:45pm, when a volunteer will be there to take them in.</p>
+          <p>For a different time, or to arrange a collection, contact us first:</p>
+          <p><a href="mailto:patroberts123@btinternet.com">patroberts123@btinternet.com</a> &middot; <a href="tel:+447794439644">07794 439644</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="volunteer" class="alt reveal">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Giving time or money</div>
+        <h2>Other ways to help</h2>
+      </div>
+      <div class="split-band">
+        <div class="band-card">
+          <h3>Volunteer on a Friday</h3>
+          <p>We're always glad of extra hands to sort donations, pack bags and welcome visitors. It's a couple of hours a week, and everyone's shown the ropes on their first session.</p>
+        </div>
+        <div class="band-card">
+          <h3>Give money</h3>
+          <p>Cash donations let us buy exactly what's short at the time &mdash; especially fresh and long-life milk, which runs out fastest. Get in touch and we'll let you know the best way to give.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Kington Foodbank</h4>
+        <p>Parish Hall, Church Street<br>Kington, Herefordshire</p>
+        <div class="badge-strip">
+          <span class="badge">Run by Churches Together in Kington</span>
+        </div>
+      </div>
+      <div>
+        <h4>Opening hours</h4>
+        <p>Fridays<br>12:15pm &ndash; 1:45pm</p>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <p><a href="mailto:patroberts123@btinternet.com">patroberts123@btinternet.com</a></p>
+        <p><a href="tel:+447794439644">07794 439644</a></p>
+      </div>
+    </div>
+    <div class="fine">&copy; <span id="year"></span> Kington Foodbank, run by Churches Together in Kington.</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
