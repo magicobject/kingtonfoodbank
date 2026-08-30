@@ -368,7 +368,7 @@ footer.site .foot-grid {
   border-bottom: 1px solid rgba(233,225,208,0.16);
 }
 @media (max-width: 700px) { footer.site .foot-grid { grid-template-columns: 1fr; } }
-footer.site h4 {
+footer.site .foot-heading {
   font-family: 'Fraunces', serif;
   font-size: 1.1rem;
   font-weight: 600;
@@ -381,7 +381,7 @@ footer.site a:hover { color: #F2D98A; }
 footer.site .fine {
   padding-top: 22px;
   font-size: 0.82rem;
-  color: #8F856E;
+  color: #A89D82;
   display: flex;
   justify-content: space-between;
   align-items: baseline;

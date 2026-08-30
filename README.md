@@ -49,6 +49,19 @@ This is maintained automatically, not by hand. `npm install` runs the `prepare` 
 
 In other words: **you never bump the build number or rebuild `public/` yourself** — just edit source files under `src/`/`templates/` and commit as normal.
 
+## Accessibility
+
+Both pages are scanned with [axe-core](https://github.com/dequelabs/axe-core) (via `@axe-core/playwright`) in [test/accessibility.spec.ts](test/accessibility.spec.ts) — part of `npm test`, so a real regression fails the suite, not just a one-off manual check.
+
+One gotcha worth knowing if this ever needs re-running by hand: the reveal-on-scroll animation (`.reveal` / the inline scroll script) means elements below the fold are still at `opacity: 0` — or mid-transition — when a scan runs immediately after `page.goto()`. Axe reads that as a real color-contrast failure, which it isn't. The spec force-settles every `.reveal` element (adds the `.in` class *and* kills the transition outright, since toggling the class alone just starts a fresh animation rather than jumping to the end state) before scanning, so it tests the real final state a visitor actually sees.
+
+Fixes that came out of the last full pass:
+
+- **A map embed with no accessible name, and an invalid ARIA attribute next to it.** The `<iframe>` showing the Google Maps embed had no `title`, so screen readers announce it as nothing in particular. Its wrapping `<div>` had `aria-label="Map showing Parish Hall"` instead — invalid, since `aria-label` isn't permitted on a plain `<div>` with no ARIA role. Moved the label to where it actually belongs: `title="Map showing Parish Hall, Kington"` on the `<iframe>` itself, and dropped the now-redundant `aria-label` from the wrapper.
+- **404 had no `<main>` landmark at all** — its content sat in a bare `<section>`, so every bit of it (heading, body text, buttons) was flagged as not contained by any landmark. Now `<main class="hero notfound">`.
+- **Footer heading levels.** "Kington Foodbank" / "Opening hours" / "Get in touch" were real `<h4>`s, which skips a level on both pages here (their last real heading is an `<h1>`, with nothing in between). They're group labels, not part of the content outline, so they're `<p class="foot-heading">` now — identical styling, no heading semantics.
+- **One real color-contrast failure:** the footer's muted copyright/build-number text only hit 4.25:1 against the dark footer background (needs 4.5:1) — lightened slightly to comfortably clear it.
+
 ## Tests
 
 [Playwright](https://playwright.dev) specs in `test/` cover:
@@ -57,6 +70,7 @@ In other words: **you never bump the build number or rebuild `public/` yourself*
 - **[footer.spec.ts](test/footer.spec.ts)** — every page shows a correctly-formatted build number and the "Site by mediawright.uk" credit.
 - **[homepage.spec.ts](test/homepage.spec.ts)** — the homepage loads with its nav and all four sections present.
 - **[not-found.spec.ts](test/not-found.spec.ts)** — unknown URLs get a real 404 status and the branded 404 page, which is `noindex`, has no main nav, and still shows correct contact details.
+- **[accessibility.spec.ts](test/accessibility.spec.ts)** — an axe-core scan of every page with zero tolerated violations (see "Accessibility" above for what that's already caught and how the reveal-on-scroll animation is worked around).
 
 `test/support/pages.ts` is the shared list of generated pages used across specs; add an entry there when adding a new page.
 
