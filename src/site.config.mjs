@@ -14,7 +14,7 @@ export const SITE = {
   phoneTel: '+447794439644',
 
   venue: 'Parish Hall',
-  street: 'Church Street',
+  street: 'Church Road',
   town: 'Kington',
   county: 'Herefordshire',
   postcode: 'HR5 3AG',

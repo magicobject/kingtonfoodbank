@@ -31,9 +31,9 @@ test('the homepage shows consistent opening hours and address in the hero and th
 
   await expect(page.locator('.notice .day')).toHaveText(/Fridays/);
   await expect(page.locator('.notice .time')).toHaveText('11:30 – 13:30');
-  await expect(page.locator('.notice .place')).toContainText('Parish Hall, Church Street, Kington, Herefordshire HR5 3AG');
+  await expect(page.locator('.notice .place')).toContainText('Parish Hall, Church Road, Kington, Herefordshire HR5 3AG');
 
   await expect(page.locator('footer.site')).toContainText('Fridays');
   await expect(page.locator('footer.site')).toContainText('11:30am – 1:30pm');
-  await expect(page.locator('footer.site')).toContainText('Parish Hall, Church Street');
+  await expect(page.locator('footer.site')).toContainText('Parish Hall, Church Road');
 });
