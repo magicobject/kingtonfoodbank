@@ -22,3 +22,10 @@ These apply to every change here, not just when explicitly asked for.
 - `public/css/style.css` is the one thing in `public/` that's hand-maintained, not generated.
 - The pre-commit hook bumps the build number and regenerates `public/` automatically on every commit — never do either by hand.
 - Contact details (email, phone, opening hours, address) live only in `src/site.config.mjs` — never hardcode them elsewhere.
+
+## Build numbers: tag every commit, and log it on /updates.html
+The pre-commit hook bumps `build-number.json` on every commit (same date → counter +1; new date → counter resets to 1). Two more things go with that, both driven by the *same* build number:
+1. **Before committing**, work out what the new build number will be (read `build-number.json`, apply the same same-date/new-date rule above) and add a new entry at the *top* of the changelog in `src/pages/updates.html` — that build number, today's date, and a one-line summary of the change. Newest entry first. Include this file in the commit like any other source change.
+2. **After committing**, tag it with that same build number and push the tag: `git tag build-<date>.<NNN>` (e.g. `build-2026.08.31.004`, matching the footer's "Build 2026.08.31.004" text exactly), then `git push origin build-<date>.<NNN>`.
+
+`/updates.html` is a real, reachable page — it's just not linked from anywhere on the site (there's no multi-page nav here, only in-page anchors), and is marked `robots: noindex` in `src/pages.config.mjs`. It's a build log for whoever knows the URL, not user-facing content.

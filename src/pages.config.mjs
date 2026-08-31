@@ -21,6 +21,16 @@ export const PAGES = [
     header: true,
   },
   {
+    slug: 'updates',
+    title: 'Site Updates — Kington Foodbank',
+    description: 'Internal build changelog for this site — not linked from anywhere on the site.',
+    // No multi-page nav to show here anyway (this site's NAV is all
+    // in-page anchors, meaningless on another page) — same reasoning as
+    // 404's header: false.
+    header: false,
+    robots: 'noindex',
+  },
+  {
     slug: '404',
     title: "Page not found — Kington Foodbank",
     description: "This page couldn't be found. Find your way back to Kington Foodbank's home page.",

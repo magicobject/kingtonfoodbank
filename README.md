@@ -49,6 +49,12 @@ This is maintained automatically, not by hand. `npm install` runs the `prepare` 
 
 In other words: **you never bump the build number or rebuild `public/` yourself** — just edit source files under `src/`/`templates/` and commit as normal.
 
+## Build tags and the /updates changelog
+
+Every commit gets a matching git tag, `build-<date>.<NNN>` (e.g. `build-2026.08.31.001`) — the same value as the footer's "Build ..." text for that commit, so any deployed build is checkoutable by name (`git checkout build-2026.08.31.001`) without digging through `git log`.
+
+[src/pages/updates.html](src/pages/updates.html) (served at `/updates.html`) is a hand-maintained changelog, one entry per build number, newest first — the human-readable counterpart to the git tags. It's a real page, built by the normal pipeline like any other, but it's deliberately not linked from anywhere on the site (this site's `NAV` is all in-page anchors on the homepage, so it wouldn't make sense there anyway — `header: false` in `src/pages.config.mjs`, same as 404), and is `robots: noindex` — a build log for whoever knows the URL, not user-facing content.
+
 ## Accessibility
 
 Both pages are scanned with [axe-core](https://github.com/dequelabs/axe-core) (via `@axe-core/playwright`) in [test/accessibility.spec.ts](test/accessibility.spec.ts) — part of `npm test`, so a real regression fails the suite, not just a one-off manual check.
