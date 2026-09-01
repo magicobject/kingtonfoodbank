@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './support/fixtures';
 
 test('the homepage loads with its main nav and every section in place', async ({ page }) => {
   await page.goto('/index.html');

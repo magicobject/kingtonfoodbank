@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './support/fixtures';
 import { PAGES } from './support/pages';
 
 for (const { path } of PAGES) {
