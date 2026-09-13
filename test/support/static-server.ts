@@ -19,6 +19,7 @@ const CONTENT_TYPES: Record<string, string> = {
   '.json': 'application/json; charset=utf-8',
   '.png': 'image/png',
   '.ico': 'image/x-icon',
+  '.pdf': 'application/pdf',
 };
 
 function decodedUrlPath(urlPath: string): string {
