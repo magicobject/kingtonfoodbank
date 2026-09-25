@@ -9,6 +9,10 @@
       </div>
       <ul class="changelog">
         <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.09.25.001</span><span class="changelog-date">25 September 2026</span></div>
+          <p>Backend-only change: the site-editor pipeline's safety check now correctly ignores a page's own <code>&lt;script type="application/ld+json"&gt;</code> structured-data block (search-engine listing info, never executed by a browser) instead of treating it as a suspicious script every time it's touched.</p>
+        </li>
+        <li>
           <div class="changelog-meta"><span class="changelog-build">2026.09.13.001</span><span class="changelog-date">13 September 2026</span></div>
           <p>Add the finalised referral form as a PDF (public/docs/KingtonFoodbankReferralForm.pdf), linked from the footer under "Get in touch".</p>
         </li>
