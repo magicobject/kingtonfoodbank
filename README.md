@@ -80,6 +80,20 @@ Fixes that came out of the last full pass:
 
 `test/support/pages.ts` is the shared list of generated pages used across specs; add an entry there when adding a new page.
 
+## Daily vulnerability watch
+
+The site is built with shared software packages written by other people. Sometimes a security problem is found in one of them and a public warning (an "advisory") is published. [.github/workflows/vuln-watch.yml](.github/workflows/vuln-watch.yml) checks for that every morning (06:17 UTC), and can be run on demand from GitHub's Actions tab ("Vulnerability watch" → "Run workflow").
+
+- It lists every installed package from `package-lock.json` and checks them against the GitHub Advisory Database (`npm audit`) and [OSV](https://osv.dev) (which also reports malicious packages).
+- **Nothing found:** nothing happens; the day's result is still recorded on the run's summary page.
+- **Something found:** one issue per advisory, labelled `security-advisory` (reopened if a closed advisory comes back). Fix it the normal way — update the package, run `npm test` and `npm run audit`, open a PR.
+- **High or critical:** the run itself fails, so GitHub emails the owner.
+- It never changes code or dependencies itself. [.github/dependabot.yml](.github/dependabot.yml) proposes updates (npm packages and the workflow's pinned actions) as PRs, which still go through review.
+
+The decisions live in [scripts/vuln-watch-lib.mjs](scripts/vuln-watch-lib.mjs) (unit-tested in `test-unit/`); [scripts/vuln-watch.mjs](scripts/vuln-watch.mjs) does the I/O. Try it locally with `node scripts/vuln-watch.mjs --dry-run` (no issues opened). The same files are used across MediaWright's sites (originally built in the MediaWright repo) — keep them in step.
+
+`npm test` runs the unit tests (`npm run test:unit`, Node's built-in test runner over `test-unit/`) before the Playwright suite. `test-unit/workflows.test.mjs` also guards the workflow itself: actions pinned to full commit SHAs, explicit least-privilege permissions, `npm ci --ignore-scripts`.
+
 ## Deployment
 
 Push to `main` — Cloudflare picks up the change and deploys `public/` automatically. There's no separate deploy step to run locally.
