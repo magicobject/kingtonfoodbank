@@ -388,6 +388,7 @@ footer.site .foot-heading {
 footer.site p, footer.site a { color: #C9BFA8; font-size: 0.96rem; }
 footer.site a { text-decoration: none; }
 footer.site a:hover { color: #F2D98A; }
+footer.site a.referral-link { font-size: 1.15em; font-weight: 700; }
 footer.site .fine {
   padding-top: 22px;
   font-size: 0.82rem;
