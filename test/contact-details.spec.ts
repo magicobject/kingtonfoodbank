@@ -21,6 +21,9 @@ test('the homepage shows the correct email and phone number, with working mailto
   await expect(mailtoLinks.first()).toBeVisible();
   await expect(mailtoLinks).toHaveText(['info@kingtonfoodbank.org.uk', 'info@kingtonfoodbank.org.uk']);
 
+  const safeguarding = page.locator('a[href="mailto:safeguarding@kingtonfoodbank.org.uk"]');
+  await expect(safeguarding).toHaveText('safeguarding@kingtonfoodbank.org.uk');
+
   const telLinks = page.locator('a[href="tel:+447794439644"]');
   await expect(telLinks.first()).toBeVisible();
   await expect(telLinks).toHaveText(['07794 439644', '07794 439644']);
@@ -36,4 +39,22 @@ test('the homepage shows consistent opening hours and address in the hero and th
   await expect(page.locator('footer.site')).toContainText('Fridays');
   await expect(page.locator('footer.site')).toContainText('11:30am – 1:30pm');
   await expect(page.locator('footer.site')).toContainText('Parish Hall, Church Road');
+});
+
+for (const { path } of PAGES) {
+  test(`${path} has no plain email address in its source`, async ({ request }) => {
+    const html = await (await request.get(path)).text();
+    expect(html).not.toMatch(/[A-Za-z0-9._-]+@[A-Za-z0-9-]+\.[A-Za-z]/);
+    expect(html).not.toContain('mailto:');
+  });
+}
+
+test.describe('without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('emails show as readable "name [at] domain" text', async ({ page }) => {
+    await page.goto('/index.html');
+    await expect(page.locator('footer.site')).toContainText('info [at] kingtonfoodbank.org.uk');
+    await expect(page.locator('#volunteer')).toContainText('safeguarding [at] kingtonfoodbank.org.uk');
+  });
 });

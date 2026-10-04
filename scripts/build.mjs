@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { NAV, PAGES } from '../src/pages.config.mjs';
 import { SITE } from '../src/site.config.mjs';
+import { emailLinkHtml } from './obfuscate-email.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (path) => readFileSync(join(root, path), 'utf8');
@@ -32,7 +33,10 @@ function tokensFromSite(site, buildNumber) {
   const tokens = { BUILD_NUMBER: buildNumber };
   for (const [key, value] of Object.entries(site)) {
     const token = key.replace(/[A-Z]/g, (c) => `_${c}`).toUpperCase();
-    tokens[token] = value;
+    // Email addresses never become plain tokens: {{EMAIL}} would put the
+    // address in the page source. Use {{EMAIL_LINK}} (obfuscated) instead.
+    if (/email$/i.test(key)) tokens[`${token}_LINK`] = emailLinkHtml(value);
+    else tokens[token] = value;
   }
   return tokens;
 }
