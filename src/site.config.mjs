@@ -10,6 +10,7 @@ export const SITE = {
   runBy: 'Churches Together in Kington',
 
   email: 'info@kingtonfoodbank.org.uk',
+  safeguardingEmail: 'safeguarding@kingtonfoodbank.org.uk',
   phoneDisplay: '07794 439644',
   phoneTel: '+447794439644',
 

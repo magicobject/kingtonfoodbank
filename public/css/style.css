@@ -346,10 +346,10 @@ section.alt { background: var(--bg-alt); }
 .drop-card p { color: #DCE0D4; margin: 0 0 10px; }
 .drop-card a { color: #F2D98A; font-weight: 600; }
 
-/* Volunteer / give money band */
+/* Volunteer / give money / safeguarding band */
 .split-band {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 28px;
 }
 @media (max-width: 760px) { .split-band { grid-template-columns: 1fr; } }
@@ -361,6 +361,8 @@ section.alt { background: var(--bg-alt); }
 }
 .band-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 10px; }
 .band-card p { color: var(--ink-soft); }
+.band-card p + p { margin-top: 12px; }
+.band-card a { overflow-wrap: anywhere; }
 
 /* Contact / footer */
 footer.site {
