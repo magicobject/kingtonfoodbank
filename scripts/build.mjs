@@ -49,14 +49,20 @@ function replaceTokens(html, tokens) {
   return out;
 }
 
-function renderNavItems(links) {
-  return links.map(({ href, label }) => `      <a href="${href}">${label}</a>`).join('\n');
+// In-page anchors only work on the home page; on any other page they must
+// point back at it ("/#help"), and so must the brand link.
+const pageHref = (href, slug) => (href.startsWith('#') && slug !== 'index' ? `/${href}` : href);
+
+function renderNavItems(links, slug) {
+  return links.map(({ href, label }) => `      <a href="${pageHref(href, slug)}">${label}</a>`).join('\n');
 }
 
 const buildNumber = readBuildNumber();
 const tokens = tokensFromSite(SITE, buildNumber);
 
-const header = headerTemplate.replace('{{NAV_ITEMS}}', renderNavItems(NAV));
+const renderHeader = (slug) => headerTemplate
+  .replace('{{NAV_ITEMS}}', renderNavItems(NAV, slug))
+  .replace('href="#top"', `href="${pageHref('#top', slug)}"`);
 
 for (const page of PAGES) {
   const content = read(`src/pages/${page.slug}.html`).trimEnd();
@@ -71,7 +77,7 @@ for (const page of PAGES) {
     .replace('{{TITLE}}', page.title)
     .replace('{{DESCRIPTION}}', page.description)
     .replace('{{EXTRA_HEAD}}', extraHead)
-    .replace('{{HEADER}}', page.header ? header : '')
+    .replace('{{HEADER}}', page.header ? renderHeader(page.slug) : '')
     .replace('{{CONTENT}}', content)
     .replace('{{FOOTER}}', footerTemplate);
 

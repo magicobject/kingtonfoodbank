@@ -9,6 +9,7 @@ export interface SitePage {
 
 export const PAGES: SitePage[] = [
   { path: '/index.html', titleContains: 'Kington Foodbank' },
+  { path: '/documents.html', titleContains: 'Documents' },
   { path: '/updates.html', titleContains: 'Site Updates' },
   { path: '/404.html', titleContains: 'Page not found' },
 ];

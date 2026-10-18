@@ -507,3 +507,10 @@ h1.headline {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+/* ---------- Documents page ---------- */
+.doc-list { list-style: none; margin: 0; padding: 0; max-width: 58ch; }
+.doc-list li { padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 1.1rem; }
+.doc-list li:first-child { border-top: 1px solid var(--line); }
+.doc-list a { font-weight: 700; }
+.doc-meta { font-size: 0.85rem; color: var(--ink-soft); }
