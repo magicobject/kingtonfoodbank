@@ -11,8 +11,8 @@ export const SITE = {
 
   email: 'info@kingtonfoodbank.org.uk',
   safeguardingEmail: 'safeguarding@kingtonfoodbank.org.uk',
-  phoneDisplay: '07794 439644',
-  phoneTel: '+447794439644',
+  phoneDisplay: '07348 052780',
+  phoneTel: '+447348052780',
 
   venue: 'Parish Hall',
   street: 'Church Road',

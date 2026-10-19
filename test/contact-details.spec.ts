@@ -24,9 +24,9 @@ test('the homepage shows the correct email and phone number, with working mailto
   const safeguarding = page.locator('a[href="mailto:safeguarding@kingtonfoodbank.org.uk"]');
   await expect(safeguarding).toHaveText('safeguarding@kingtonfoodbank.org.uk');
 
-  const telLinks = page.locator('a[href="tel:+447794439644"]');
+  const telLinks = page.locator('a[href="tel:+447348052780"]');
   await expect(telLinks.first()).toBeVisible();
-  await expect(telLinks).toHaveText(['07794 439644', '07794 439644']);
+  await expect(telLinks).toHaveText(['07348 052780', '07348 052780']);
 });
 
 test('the homepage shows consistent opening hours and address in the hero and the footer', async ({ page }) => {
