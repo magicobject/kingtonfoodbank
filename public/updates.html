@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=2026.10.18.001">
+<link rel="stylesheet" href="/css/style.css?v=2026.10.19.001">
 </head>
 <body>
 
@@ -36,6 +36,10 @@
         <p>An internal changelog: every build number and what changed. This page isn't linked from anywhere else on the site.</p>
       </div>
       <ul class="changelog">
+        <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.19.001</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">19 October 2026</span></div>
+          <p>Fixed a behind-the-scenes bug in the system that applies volunteer-requested website changes: a missing setup step meant the build number shown in the site's footer could fall out of step with the one logged on this page (this is why yesterday's phone number change showed the right number on the page but the old build number in the footer). Also, that system now reports progress step by step (working on it, merged, deploying, live) instead of telling a volunteer their change is live the instant it merges, before the site has actually redeployed.</p>
+        </li>
         <li>
           <div class="changelog-meta"><span class="changelog-build">2026.10.19.001</span><span class="changelog-author">Phillippa Wright</span><span class="changelog-date">19 October 2026</span></div>
           <p>Change the contact phone number to 07348 052780 everywhere it appears on the site.</p>
@@ -165,11 +169,11 @@
     </div>
     <div class="fine">
       <span>&copy; <span id="year"></span> Kington Foodbank, run by Churches Together in Kington. Site by <a href="https://mediawright.uk">mediawright.uk</a>.</span>
-      <span class="build-number">Build 2026.10.18.001</span>
+      <span class="build-number">Build 2026.10.19.001</span>
     </div>
   </div>
 </footer>
 
-<script src="/js/main.js?v=2026.10.18.001" defer></script>
+<script src="/js/main.js?v=2026.10.19.001" defer></script>
 </body>
 </html>
