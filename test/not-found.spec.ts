@@ -28,5 +28,5 @@ test('the 404 page still shows correct, parameterized contact details', async ({
   await page.goto('/this-page-does-not-exist.html');
 
   await expect(page.locator('footer.site a[href="mailto:info@kingtonfoodbank.org.uk"]')).toBeVisible();
-  await expect(page.locator('footer.site a[href="tel:+447794439644"]')).toBeVisible();
+  await expect(page.locator('footer.site a[href="tel:+447348052780"]')).toBeVisible();
 });
