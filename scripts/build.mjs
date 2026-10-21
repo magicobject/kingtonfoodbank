@@ -5,6 +5,7 @@
 // public/*.html — Cloudflare serves that directory as-is.
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { NAV, PAGES } from '../src/pages.config.mjs';
@@ -17,6 +18,30 @@ const read = (path) => readFileSync(join(root, path), 'utf8');
 const pageTemplate = read('templates/page.html');
 const headerTemplate = read('templates/header.html').trimEnd();
 const footerTemplate = read('templates/footer.html').trimEnd();
+
+// Cache-busting for every same-origin stylesheet, script and icon a page
+// loads: `<link href="/css/style.css">` becomes
+// `<link href="/css/style.css?v=<hash>">`, where the hash is taken from that
+// file's own content. A page's HTML therefore only changes when something it
+// actually loads has changed — unlike a ?v=<build number>, which would
+// rewrite every page on every commit whether or not the CSS/JS had moved.
+// Runs over the finished HTML, so any <link href="/..."> or <script
+// src="/..."> a page adds picks this up without anyone having to remember a
+// ?v= — a reference to a file that doesn't exist fails the build instead.
+const assetHashes = new Map();
+function assetHash(publicPath) {
+  if (!assetHashes.has(publicPath)) {
+    const file = join(root, 'public', publicPath);
+    if (!existsSync(file)) throw new Error(`build: page references ${publicPath}, which doesn't exist in public/`);
+    assetHashes.set(publicPath, createHash('sha256').update(readFileSync(file)).digest('hex').slice(0, 10));
+  }
+  return assetHashes.get(publicPath);
+}
+
+function versionAssetUrls(html) {
+  return html.replace(/<(link|script)\b[^>]*>/g, (tag) =>
+    tag.replace(/\b(href|src)="(\/(?!\/)[^"?#]+)"/, (_, attr, path) => `${attr}="${path}?v=${assetHash(path)}"`));
+}
 
 function readBuildNumber() {
   const file = join(root, 'build-number.json');
@@ -82,6 +107,7 @@ for (const page of PAGES) {
     .replace('{{FOOTER}}', footerTemplate);
 
   html = replaceTokens(html, tokens);
+  html = versionAssetUrls(html);
 
   writeFileSync(join(root, 'public', `${page.slug}.html`), html);
   console.log(`built public/${page.slug}.html`);

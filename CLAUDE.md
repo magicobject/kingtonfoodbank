@@ -25,8 +25,12 @@ These apply to every change here, not just when explicitly asked for.
 - Contact details (email, phone, opening hours, address) live only in `src/site.config.mjs` — never hardcode them elsewhere.
 
 ## Build numbers: tag every commit, and log it on /updates.html
+The build number appears in exactly one place in source: the literal `{{BUILD_NUMBER}}` token in `src/pages/updates.html` (rendered there as "Current build: ..."). No other page references it — the shared footer and the page template's CSS/JS `<link>`/`<script>` tags don't use it at all — so a commit that doesn't touch `/updates.html`'s own content only changes the pages it actually touched, not every page in `public/`.
+
+Asset cache-busting is separate and automatic: `scripts/build.mjs`'s `versionAssetUrls` appends `?v=<hash>` to every root-relative `href`/`src` on a `<link>`/`<script>` tag, where `<hash>` is a content hash of the referenced file in `public/`. Never hand-write a `?v=` — the build adds it, and a reference to a file that doesn't exist fails the build.
+
 The pre-commit hook bumps `build-number.json` on every commit (same date → counter +1; new date → counter resets to 1). Two more things go with that, both driven by the *same* build number:
 1. **Before committing**, work out what the new build number will be (read `build-number.json`, apply the same same-date/new-date rule above) and add a new entry at the *top* of the changelog in `src/pages/updates.html` — that build number, today's date, the author (resolve with `gh api user --jq .login`, look it up in `users.json` — the roster of `firstName`, `lastName`, `github` — and use `firstName lastName` as the `changelog-author`; if the account isn't listed, add it first), and a one-line summary of the change. Newest entry first. Include this file in the commit like any other source change.
-2. **After committing**, tag it with that same build number and push the tag: `git tag build-<date>.<NNN>` (e.g. `build-2026.08.31.004`, matching the footer's "Build 2026.08.31.004" text exactly), then `git push origin build-<date>.<NNN>`.
+2. **After committing**, tag it with that same build number and push the tag: `git tag build-<date>.<NNN>` (e.g. `build-2026.08.31.004`, matching the updates page's "Current build: 2026.08.31.004" text exactly), then `git push origin build-<date>.<NNN>`.
 
 `/updates.html` is a real, reachable page — it's just not linked from anywhere on the site (there's no multi-page nav here, only in-page anchors), and is marked `robots: noindex` in `src/pages.config.mjs`. It's a build log for whoever knows the URL, not user-facing content.
