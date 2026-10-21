@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=107307ea8b">
+<link rel="stylesheet" href="/css/style.css?v=145d557fda">
 </head>
 <body>
 
@@ -34,9 +34,13 @@
         <div class="kicker">Build history</div>
         <h1>Site updates</h1>
         <p>An internal changelog: every build number and what changed. This page isn't linked from anywhere else on the site.</p>
-        <p class="build-number">Current build: 2026.10.21.003</p>
+        <p class="build-number">Current build: 2026.10.21.004</p>
       </div>
       <ul class="changelog">
+        <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.21.004</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
+          <p>Fix the new content-hash cache-busting itself: a Windows checkout with Git's autocrlf setting left stale CRLF copies of tracked files on disk even after adding <code>.gitattributes</code>, so a local build was hashing the wrong bytes and stamping a <code>?v=</code> into each page that didn't match the file actually served. Re-synced the working tree with Git so it matches what's committed and deployed.</p>
+        </li>
         <li>
           <div class="changelog-meta"><span class="changelog-build">2026.10.21.003</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
           <p>Correct a mislabelled build number: merging <code>main</code> into this change bumped the build number past what the entry below it predicted, without a matching log entry of its own.</p>
@@ -182,6 +186,6 @@
   </div>
 </footer>
 
-<script src="/js/main.js?v=cf74fe4002" defer></script>
+<script src="/js/main.js?v=5ec1d51a4e" defer></script>
 </body>
 </html>

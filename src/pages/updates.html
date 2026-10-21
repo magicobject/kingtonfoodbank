@@ -10,6 +10,10 @@
       </div>
       <ul class="changelog">
         <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.21.004</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
+          <p>Fix the new content-hash cache-busting itself: a Windows checkout with Git's autocrlf setting left stale CRLF copies of tracked files on disk even after adding <code>.gitattributes</code>, so a local build was hashing the wrong bytes and stamping a <code>?v=</code> into each page that didn't match the file actually served. Re-synced the working tree with Git so it matches what's committed and deployed.</p>
+        </li>
+        <li>
           <div class="changelog-meta"><span class="changelog-build">2026.10.21.003</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
           <p>Correct a mislabelled build number: merging <code>main</code> into this change bumped the build number past what the entry below it predicted, without a matching log entry of its own.</p>
         </li>
