@@ -10,7 +10,11 @@
       </div>
       <ul class="changelog">
         <li>
-          <div class="changelog-meta"><span class="changelog-build">2026.10.21.001</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.21.003</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
+          <p>Correct a mislabelled build number: merging <code>main</code> into this change bumped the build number past what the entry below it predicted, without a matching log entry of its own.</p>
+        </li>
+        <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.21.002</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
           <p>Stop stamping the build number and a cache-busting version number into every single page on every commit — it now only shows on this updates log, and the CSS/JS links are versioned by a hash of the actual file instead, so a commit only changes the pages it actually touched.</p>
         </li>
         <li>
