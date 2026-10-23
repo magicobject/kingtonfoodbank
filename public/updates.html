@@ -14,14 +14,14 @@
 <meta name="description" content="Internal build changelog for this site — not linked from anywhere on the site.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://kingtonfoodbank.org.uk/updates.html">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon.ico?v=06a4008640" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2bb34ac23a">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=28b73897e7">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=31cea2426d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=2026.10.19.001">
+<link rel="stylesheet" href="/css/style.css?v=145d557fda">
 </head>
 <body>
 
@@ -34,11 +34,28 @@
         <div class="kicker">Build history</div>
         <h1>Site updates</h1>
         <p>An internal changelog: every build number and what changed. This page isn't linked from anywhere else on the site.</p>
+        <p class="build-number">Current build: 2026.10.23.001</p>
       </div>
       <ul class="changelog">
         <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.23.001</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">23 October 2026</span></div>
+          <p>Fixed a behind-the-scenes bug in the system that applies volunteer-requested website changes: a missing setup step meant the build number shown in the site's footer could fall out of step with the one logged on this page (this is why the 19 October phone number change showed the right number on the page but the old build number in the footer). Also, that system now reports progress step by step (working on it, merged, deploying, live) instead of telling a volunteer their change is live the instant it merges, before the site has actually redeployed.</p>
+        </li>
+        <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.21.004</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
+          <p>Fix the new content-hash cache-busting itself: a Windows checkout with Git's autocrlf setting left stale CRLF copies of tracked files on disk even after adding <code>.gitattributes</code>, so a local build was hashing the wrong bytes and stamping a <code>?v=</code> into each page that didn't match the file actually served. Re-synced the working tree with Git so it matches what's committed and deployed.</p>
+        </li>
+        <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.21.003</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
+          <p>Correct a mislabelled build number: merging <code>main</code> into this change bumped the build number past what the entry below it predicted, without a matching log entry of its own.</p>
+        </li>
+        <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.21.002</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
+          <p>Stop stamping the build number and a cache-busting version number into every single page on every commit — it now only shows on this updates log, and the CSS/JS links are versioned by a hash of the actual file instead, so a commit only changes the pages it actually touched.</p>
+        </li>
+        <li>
           <div class="changelog-meta"><span class="changelog-build">2026.10.19.001</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">19 October 2026</span></div>
-          <p>Fixed a behind-the-scenes bug in the system that applies volunteer-requested website changes: a missing setup step meant the build number shown in the site's footer could fall out of step with the one logged on this page (this is why yesterday's phone number change showed the right number on the page but the old build number in the footer). Also, that system now reports progress step by step (working on it, merged, deploying, live) instead of telling a volunteer their change is live the instant it merges, before the site has actually redeployed.</p>
+          <p>Add a GitHub Action that re-runs this site's own test suite and audit against any Claude-authored pull request, then merges it (or holds it for review) accordingly. CI/tooling only &mdash; no page content changed.</p>
         </li>
         <li>
           <div class="changelog-meta"><span class="changelog-build">2026.10.19.001</span><span class="changelog-author">Phillippa Wright</span><span class="changelog-date">19 October 2026</span></div>
@@ -169,11 +186,10 @@
     </div>
     <div class="fine">
       <span>&copy; <span id="year"></span> Kington Foodbank, run by Churches Together in Kington. Site by <a href="https://mediawright.uk">mediawright.uk</a>.</span>
-      <span class="build-number">Build 2026.10.19.001</span>
     </div>
   </div>
 </footer>
 
-<script src="/js/main.js?v=2026.10.19.001" defer></script>
+<script src="/js/main.js?v=5ec1d51a4e" defer></script>
 </body>
 </html>

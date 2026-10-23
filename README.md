@@ -37,21 +37,23 @@ Running `npm run build` reads all four and writes the finished files into `publi
 
 If you're not sure whether a file in `public/` is generated or hand-maintained, check whether it has a same-named counterpart under `src/pages/` — if it does, it's generated.
 
-## The pre-commit hook and the build number in the footer
+## The pre-commit hook, the build number, and asset cache-busting
 
-Every page's footer shows a build number like `Build 2026.08.29.003` (format `yyyy.mm.dd.NNN`, where `NNN` counts commits made that day, stored in [build-number.json](build-number.json)).
+The build number (format `yyyy.mm.dd.NNN`, where `NNN` counts commits made that day, stored in [build-number.json](build-number.json)) appears in exactly one place on the site: `/updates.html`, as "Current build: 2026.08.29.003". No other page shows it, and nothing else in source references it — so a commit only changes the pages it actually touched, not every page in `public/`.
 
 This is maintained automatically, not by hand. `npm install` runs the `prepare` script, which points git at the tracked [.githooks/pre-commit](.githooks/pre-commit) hook. On every commit, that hook:
 
 1. Runs [scripts/bump-build-number.mjs](scripts/bump-build-number.mjs), which increments today's counter in `build-number.json`.
-2. Runs `npm run build`, regenerating every file in `public/` — including stamping the new build number into each footer and cache-busting `css/style.css?v=...`.
+2. Runs `npm run build`, regenerating every file in `public/` — including stamping the new build number into `/updates.html` and cache-busting every page's CSS/JS/favicon links.
 3. Stages the results (`git add public build-number.json`) so they're included in the commit you're about to make.
 
 In other words: **you never bump the build number or rebuild `public/` yourself** — just edit source files under `src/`/`templates/` and commit as normal.
 
+Cache-busting (`css/style.css?v=...`) is separate from the build number: `scripts/build.mjs`'s `versionAssetUrls` rewrites every root-relative `href`/`src` on a page's `<link>`/`<script>` tags to carry a `?v=` taken from a content hash of that actual file in `public/`. A page's HTML therefore only changes when something it loads has really changed, and a reference to a file that doesn't exist fails the build. Never hand-write a `?v=` value.
+
 ## Build tags and the /updates changelog
 
-Every commit gets a matching git tag, `build-<date>.<NNN>` (e.g. `build-2026.08.31.001`) — the same value as the footer's "Build ..." text for that commit, so any deployed build is checkoutable by name (`git checkout build-2026.08.31.001`) without digging through `git log`.
+Every commit gets a matching git tag, `build-<date>.<NNN>` (e.g. `build-2026.08.31.001`) — the same value as `/updates.html`'s "Current build: ..." text for that commit, so any deployed build is checkoutable by name (`git checkout build-2026.08.31.001`) without digging through `git log`.
 
 [src/pages/updates.html](src/pages/updates.html) (served at `/updates.html`) is a hand-maintained changelog, one entry per build number, newest first — the human-readable counterpart to the git tags. It's a real page, built by the normal pipeline like any other, but it's deliberately not linked from anywhere on the site (this site's `NAV` is all in-page anchors on the homepage, so it wouldn't make sense there anyway — `header: false` in `src/pages.config.mjs`, same as 404), and is `robots: noindex` — a build log for whoever knows the URL, not user-facing content.
 
@@ -73,7 +75,8 @@ Fixes that came out of the last full pass:
 [Playwright](https://playwright.dev) specs in `test/` cover:
 
 - **[contact-details.spec.ts](test/contact-details.spec.ts)** — the point of the DRY-up: checks the email, phone, opening hours and address actually got substituted correctly (and that no `{{TOKEN}}` placeholder was ever left un-replaced) on every generated page.
-- **[footer.spec.ts](test/footer.spec.ts)** — every page shows a correctly-formatted build number and the "Site by mediawright.uk" credit.
+- **[footer.spec.ts](test/footer.spec.ts)** — `/updates.html` shows a correctly-formatted build number, no other page does, and every page credits "Site by mediawright.uk" in the footer.
+- **[asset-versions.spec.ts](test/asset-versions.spec.ts)** — every page's local stylesheet, script and icon links carry a `?v=` matching that file's own content hash.
 - **[homepage.spec.ts](test/homepage.spec.ts)** — the homepage loads with its nav and all four sections present.
 - **[not-found.spec.ts](test/not-found.spec.ts)** — unknown URLs get a real 404 status and the branded 404 page, which is `noindex`, has no main nav, and still shows correct contact details.
 - **[accessibility.spec.ts](test/accessibility.spec.ts)** — an axe-core scan of every page with zero tolerated violations (see "Accessibility" above for what that's already caught and how the reveal-on-scroll animation is worked around).
