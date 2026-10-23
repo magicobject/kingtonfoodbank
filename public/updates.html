@@ -34,9 +34,13 @@
         <div class="kicker">Build history</div>
         <h1>Site updates</h1>
         <p>An internal changelog: every build number and what changed. This page isn't linked from anywhere else on the site.</p>
-        <p class="build-number">Current build: 2026.10.21.004</p>
+        <p class="build-number">Current build: 2026.10.23.001</p>
       </div>
       <ul class="changelog">
+        <li>
+          <div class="changelog-meta"><span class="changelog-build">2026.10.23.001</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">23 October 2026</span></div>
+          <p>Fixed a behind-the-scenes bug in the system that applies volunteer-requested website changes: a missing setup step meant the build number shown in the site's footer could fall out of step with the one logged on this page (this is why the 19 October phone number change showed the right number on the page but the old build number in the footer). Also, that system now reports progress step by step (working on it, merged, deploying, live) instead of telling a volunteer their change is live the instant it merges, before the site has actually redeployed.</p>
+        </li>
         <li>
           <div class="changelog-meta"><span class="changelog-build">2026.10.21.004</span><span class="changelog-author">Greg Wright</span><span class="changelog-date">21 October 2026</span></div>
           <p>Fix the new content-hash cache-busting itself: a Windows checkout with Git's autocrlf setting left stale CRLF copies of tracked files on disk even after adding <code>.gitattributes</code>, so a local build was hashing the wrong bytes and stamping a <code>?v=</code> into each page that didn't match the file actually served. Re-synced the working tree with Git so it matches what's committed and deployed.</p>
