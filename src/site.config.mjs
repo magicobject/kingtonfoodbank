@@ -2,7 +2,7 @@
 // site — the hero, the "Getting help" and "Donating food" sections, the
 // footer, and the 404 page. Edit a value here to update it everywhere at
 // once; scripts/build.mjs replaces every {{TOKEN}} (e.g. {{EMAIL}},
-// {{PHONE_DISPLAY}}) with the matching value below, in templates and in
+// {{VENUE}}) with the matching value below, in templates and in
 // src/pages/*.html content alike.
 
 export const SITE = {
@@ -11,8 +11,6 @@ export const SITE = {
 
   email: 'info@kingtonfoodbank.org.uk',
   safeguardingEmail: 'safeguarding@kingtonfoodbank.org.uk',
-  phoneDisplay: '07348 052780',
-  phoneTel: '+447348052780',
 
   venue: 'Parish Hall',
   street: 'Church Road',
