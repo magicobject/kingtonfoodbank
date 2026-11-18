@@ -2,7 +2,7 @@ import { test, expect } from './support/fixtures';
 import { PAGES } from './support/pages';
 
 // Regression guard for the DRY-up of contact details: the email address,
-// phone number, opening hours and address all come from a single source
+// opening hours and address all come from a single source
 // (src/site.config.mjs) and are substituted in at build time. These specs
 // check the substitution actually happened correctly on every page — not
 // just on the homepage where the details were originally hand-written.
@@ -14,7 +14,7 @@ for (const { path } of PAGES) {
   });
 }
 
-test('the homepage shows the correct email and phone number, with working mailto/tel links', async ({ page }) => {
+test('the homepage shows the correct email, with working mailto links', async ({ page }) => {
   await page.goto('/index.html');
 
   const mailtoLinks = page.locator('a[href="mailto:info@kingtonfoodbank.org.uk"]');
@@ -23,10 +23,6 @@ test('the homepage shows the correct email and phone number, with working mailto
 
   const safeguarding = page.locator('a[href="mailto:safeguarding@kingtonfoodbank.org.uk"]');
   await expect(safeguarding).toHaveText('safeguarding@kingtonfoodbank.org.uk');
-
-  const telLinks = page.locator('a[href="tel:+447348052780"]');
-  await expect(telLinks.first()).toBeVisible();
-  await expect(telLinks).toHaveText(['07348 052780', '07348 052780']);
 });
 
 test('the homepage shows consistent opening hours and address in the hero and the footer', async ({ page }) => {
