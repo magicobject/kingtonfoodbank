@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
   var year = document.getElementById('year');
   if (year) { year.textContent = new Date().getFullYear(); }
 
+  // Seasonal notices carry a data-hide-from="YYYY-MM-DD" date and remove
+  // themselves once that date arrives, so a dated announcement (e.g.
+  // Christmas opening hours) doesn't need a follow-up change to take it
+  // down again. Without JavaScript the notice simply stays up.
+  document.querySelectorAll('[data-hide-from]').forEach(function (el) {
+    var hideFrom = new Date(el.getAttribute('data-hide-from') + 'T00:00:00');
+    if (!isNaN(hideFrom.getTime()) && new Date() >= hideFrom) { el.remove(); }
+  });
+
   // Turn each obfuscated email span (see scripts/obfuscate-email.mjs) into a
   // real mailto: link. Without JavaScript the "name [at] domain" text stays.
   document.querySelectorAll('.obf-email').forEach(function (el) {
